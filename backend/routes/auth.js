@@ -2,7 +2,7 @@ const express = require('express');
 const router = express.Router();
 const Dealer = require('../models/Dealer');
 const jwt = require('jsonwebtoken');
-
+const bcrypt = require('bcrypt'); 
 // Register
 router.post('/register', async (req, res) => {
   try {

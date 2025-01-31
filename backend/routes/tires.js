@@ -2,6 +2,7 @@ const express = require('express');
 const router = express.Router();
 const Tire = require('../models/Tire');
 const auth = require('../middleware/auth');
+const { calculateFitment } = require('../services/fitment');
 
 // Add tire (protected route)
 router.post('/', auth, async (req, res) => {
@@ -15,12 +16,15 @@ router.post('/', auth, async (req, res) => {
 
 // Get all tires for logged-in dealer
 router.get('/', auth, async (req, res) => {
-  const tires = await Tire.find({ dealer: req.dealerId });
-  res.json(tires);
+  try {
+    const tires = await Tire.find({ dealer: req.dealerId });
+    res.json(tires);
+  } catch (err) {
+    res.status(500).json({ error: err.message });
+  }
 });
-const express = require('express');
-const { calculateFitment } = require('../services/fitment');
 
+// Calculate fitment
 router.post('/fitment', async (req, res) => {
   try {
     const tires = await calculateFitment(req.body);

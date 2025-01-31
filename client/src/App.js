@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import { BrowserRouter as Router, Route, Routes } from 'react-router-dom';
 import Login from './Login';
-import TireList from './TireList';
+import TireList from './components/TireList';
 
 const App = () => {
   const [token, setToken] = useState(localStorage.getItem('token'));
